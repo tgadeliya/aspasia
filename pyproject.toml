@@ -1,0 +1,11 @@
+[project]
+name = "aspasia"
+version = "0.1.0"
+description = "Implementation and replication of AI debate papers using Inspect framework"
+readme = "README.md"
+requires-python = ">=3.13.3"
+dependencies = [
+    "inspect-ai>=0.3.117",
+    "openai>=1.98.0",
+    "python-dotenv>=1.1.1",
+]

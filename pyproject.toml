@@ -12,3 +12,31 @@ dependencies = [
     "pandas>=2.3.1",
     "python-dotenv>=1.1.1",
 ]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.1",
+    "ruff>=0.12.9",
+    "ty>=0.0.1a18",
+]
+
+[tool.ruff]
+line-length = 88
+
+[tool.ruff.lint]
+preview = true
+select = [
+    "E",
+    "F",
+    "I",
+    "UP"
+]
+extend-select = [
+    "E501",
+    "UP045"
+]
+ignore = [
+    "E702"
+]
+
+

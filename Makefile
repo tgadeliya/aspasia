@@ -2,7 +2,7 @@ DATA_DIR := data
 BASE_URL := https://raw.githubusercontent.com/nyu-mll/quality/main/data/v1.0.1
 PREFIX := QuALITY.v1.0.1.htmlstripped
 
-PARTS := train val test
+PARTS := train dev test
 
 download-data:
 	mkdir -p $(DATA_DIR)

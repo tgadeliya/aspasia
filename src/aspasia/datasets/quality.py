@@ -19,7 +19,8 @@ class QuALITYExample:
 
     def to_sample(self) -> Sample:
         choices_letters: list[str] = ["A", "B"]
-        if (gold_idx := random.randint(0, 1)):
+        gold_idx = random.randint(0, 1)
+        if gold_idx == 0:
             choices = [self.answer["gold"], self.answer["best_distractor"]]
         else:
             choices = [self.answer["best_distractor"], self.answer["gold"]]
@@ -28,9 +29,10 @@ class QuALITYExample:
             metadata={
                 "answers": self.answer,
                 "letters": choices_letters,
+                "article": self.article,
                 **self.metadata,
             },
-            input=self.article,
+            input=self.question,
             target=choices_letters[gold_idx],
             choices=choices
         )
@@ -78,7 +80,7 @@ class QuALITY:
                         "topic": example["topic"],
                     },
                     article=example["article"],
-                    question=question,
+                    question=question["question"],
                     answer={
                         "gold": gold_answer,
                         "best_distractor": best_distractor,
@@ -144,12 +146,6 @@ class QuALITY:
 
     def get_memory_dataset(self, split: SPLIT_TYPE) -> MemoryDataset:
         if self.split.get(split) is None:
-            self.prepare_dataset_per_split(split)
+            self._prepare_dataset_per_split(split)
         converted_dataset = [example.to_sample() for example in self.split[split]]
         return MemoryDataset(converted_dataset)
-
-
-if __name__ == "__main__":
-    data_dir = Path("/Users/tsimur.hadeliya/code/aspasia/data")
-    dataset =QuALITY(data_dir=data_dir)
-    dataset.prepare_dataset()

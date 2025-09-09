@@ -30,6 +30,8 @@ class QuALITYExample:
                 "answers": self.answer,
                 "letters": choices_letters,
                 "article": self.article,
+                "question": self.question,
+                "choices": choices,
                 **self.metadata,
             },
             input=self.question,

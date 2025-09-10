@@ -6,21 +6,16 @@ from typing import Match, TypedDict
 
 from inspect_ai._util.answer import answer_character, answer_index
 from inspect_ai._util.logger import warn_once
+from inspect_ai.solver import Generate, Solver, TaskState, solver
 from inspect_ai.solver._multiple_choice import (
     MULTIPLE_ANSWER_TEMPLATE,
     MULTIPLE_ANSWER_TEMPLATE_COT,
     SINGLE_ANSWER_TEMPLATE,
     SINGLE_ANSWER_TEMPLATE_COT,
     DeprecatedArgs,
-    parse_answers,
-    pretend_we_didnt_shuffle,
     prompt,
-    set_choices_based_on_generated_response,
-    unshuffle_choices,
     valid_template,
 )
-from inspect_ai.solver._solver import Generate, Solver, solver
-from inspect_ai.solver._task_state import Choices, TaskState
 from inspect_ai.util import resource
 from typing_extensions import Unpack
 
@@ -33,7 +28,6 @@ def multiple_choice_no_generation(
     template: str | None = None,
     cot: bool = False,
     multiple_correct: bool = False,
-    max_tokens: int | None = None,
     **kwargs: Unpack[DeprecatedArgs],
 ) -> Solver:
     """

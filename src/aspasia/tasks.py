@@ -25,7 +25,7 @@ def consultancy_runner():
                 template=MCQ_TEMPLATE,
             ),
             user_message(ARTICLE_TEMPLATE),
-            consultancy(num_turns=2),
+            consultancy(num_turns=2, interactive=True),
         ],
         message_limit=12,
         model="openai/gpt-4.1-nano",
@@ -33,4 +33,5 @@ def consultancy_runner():
         config=GenerateConfig(temperature=0.0, max_tokens=300),
         name="consultancy_test",
         scorer=answer(pattern="letter"),
+        display=""
     )

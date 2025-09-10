@@ -20,6 +20,9 @@ dev = [
     "ty>=0.0.1a18",
 ]
 
+[project.entry-points.inspect_ai]
+evals = "aspasia._registry"
+
 [tool.ruff]
 line-length = 88
 

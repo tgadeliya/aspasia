@@ -32,6 +32,7 @@ class QuALITYExample:
                 "article": self.article,
                 "question": self.question,
                 "choices": choices,
+                "target": choices_letters[gold_idx], 
                 **self.metadata,
             },
             input=self.question,

@@ -7,9 +7,6 @@ import tempfile
 from dataclasses import asdict, is_dataclass
 from typing import Any, Iterable
 
-from inspect_ai.agent import Agent, AgentState, agent
-from inspect_ai.model import ChatMessageUser
-from inspect_ai.util import input_screen
 from rich.console import Console
 from rich.markdown import Markdown
 from rich.panel import Panel
@@ -132,8 +129,6 @@ def display_chat_history_in_console(
 
 
 # ---------- Input helpers ----------
-
-
 def _edit_in_system_editor(initial: str = "") -> str:
     editor = os.environ.get("VISUAL") or os.environ.get("EDITOR")
     if not editor:
@@ -194,41 +189,13 @@ def prompt_for_reply(console: Console, prompt: str = "Your reply>") -> str:
 
 
 # ---------- Agent ----------
-from inspect_ai.agent import Agent, AgentState, agent, run, human_cli
-from inspect_ai.model import ChatMessageSystem, ChatMessageUser, ModelOutput, get_model
 
 
-from inspect_ai.util import input_screen
 
-from aspasia.prompts import CONSULTANT_JUDGE_PROMPT, CONSULTANT_PROMPT
 from rich.console import Console
 
 
 
-def prepare_messages(messages, ignore_tags: list[str], agent_prompt: str | None = None):
-    """
-    Prepare message history by adding system prompt for agent and 
-    filtering messages based on ignore_tags.    
-    """
-    prepared_messages = [ChatMessageSystem(content=agent_prompt)] if agent_prompt else []
-    for message in messages:
-        if any(str(message.content).startswith(tag) for tag in ignore_tags):
-            continue  # skip messages starting with tags from ignore_tags
-        prepared_messages.append(message)
-    return prepared_messages
 
 
-# assume you already have `prepare_messages` in scope
-@agent
-def chatgpt_iteractive_judge_agent(ignore_msg_with_tags: list[str] = []) -> Agent:
-    async def execute(state: AgentState) -> AgentState:
-        with input_screen(transient=False) as console:
-            judge_messages: list = prepare_messages(
-                state.messages, ignore_msg_with_tags
-            )
-            display_chat_history_in_console(console, judge_messages)
-            response = prompt_for_reply(console, prompt="Write your reply")
-        state.messages.append(ChatMessageUser(content=response))
-        return state
 
-    return execute

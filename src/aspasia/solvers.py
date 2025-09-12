@@ -1,10 +1,6 @@
 import logging
-import re
-from enum import Enum
 from random import Random
-from typing import Match, TypedDict
 
-from inspect_ai._util.answer import answer_character, answer_index
 from inspect_ai._util.logger import warn_once
 from inspect_ai.solver import Generate, Solver, TaskState, solver
 from inspect_ai.solver._multiple_choice import (
@@ -78,6 +74,7 @@ def multiple_choice_no_generation(
             template=str(template),
         )
 
+        state.user_prompt.metadata = {"target": state.metadata["target"]}
         return state
 
     return solve

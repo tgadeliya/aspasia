@@ -1,5 +1,6 @@
 import logging
 from random import Random
+from typing import Unpack
 
 from inspect_ai._util.logger import warn_once
 from inspect_ai.solver import Generate, Solver, TaskState, solver
@@ -13,7 +14,6 @@ from inspect_ai.solver._multiple_choice import (
     valid_template,
 )
 from inspect_ai.util import resource
-from typing_extensions import Unpack
 
 logger = logging.getLogger(__name__)
 
@@ -26,9 +26,7 @@ def multiple_choice_no_generation(
     multiple_correct: bool = False,
     **kwargs: Unpack[DeprecatedArgs],
 ) -> Solver:
-    """
-    Copy-paste of Inspect's multiple_choice solver without generation step.
-    """
+    """Copy-paste of Inspect's multiple_choice solver without generation step."""
     shuffle: bool | Random = False
     if "shuffle" in kwargs:
         shuffle = kwargs["shuffle"]
@@ -36,12 +34,15 @@ def multiple_choice_no_generation(
         if shuffle:
             warn_once(
                 logger,
-                "The multiple choice shuffle parameter is deprecated. Please shuffle choices at the time your dataset is read by using the shuffle_choices method/parameter of the datasets API.",
+                "The multiple choice shuffle parameter is deprecated. Please shuffle "
+                "choices at the time your dataset is read by using the shuffle_choices "
+                "method/parameter of the datasets API.",
             )
 
     if template and not valid_template(template):
         raise ValueError(
-            "The template must contain '{question}' and '{choices}' placeholders for string substitution."
+            "The template must contain '{question}' and '{choices}' placeholders "
+            "for string substitution."
         )
 
     if template is None:

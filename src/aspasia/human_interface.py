@@ -4,8 +4,9 @@ import json
 import os
 import subprocess
 import tempfile
+from collections.abc import Iterable
 from dataclasses import asdict, is_dataclass
-from typing import Any, Iterable
+from typing import Any
 
 from rich.console import Console
 from rich.markdown import Markdown
@@ -39,11 +40,11 @@ def _safe_to_str(x: Any) -> str:
 
 
 def _render_content_to_console(console: Console, content: Any) -> None:
-    """
-    Render ChatMessage.content which can be:
-      - str (markdown)
-      - list/iter of structured parts (we try to show text; annotate others)
-      - arbitrary objects (json-ish)
+    """Render ChatMessage.content which can be:
+
+    - str (markdown)
+    - list/iter of structured parts (we try to show text; annotate others)
+    - arbitrary objects (json-ish)
     """
     if isinstance(content, str):
         console.print(Markdown(content))
@@ -51,7 +52,7 @@ def _render_content_to_console(console: Console, content: Any) -> None:
 
     # Common Inspect/LLM shapes: [{type: "text", text: "..."}], etc.
     if isinstance(content, Iterable) and not isinstance(
-        content, (bytes, bytearray, dict)
+        content, bytes | bytearray | dict
     ):
         for part in content:
             if isinstance(part, str):
@@ -102,7 +103,7 @@ def display_chat_history_in_console(
         if isinstance(meta, dict):
             tags = meta.get("tags") or meta.get("tag") or None
             if tags:
-                if isinstance(tags, (list, tuple, set)):
+                if isinstance(tags, list | tuple | set):
                     subtitle = f"tags: {', '.join(map(str, tags))}"
                 else:
                     subtitle = f"tags: {tags}"
@@ -141,7 +142,7 @@ def _edit_in_system_editor(initial: str = "") -> str:
             tf.flush()
     try:
         subprocess.run([editor, path], check=False)
-        with open(path, "r") as f:
+        with open(path) as f:
             return f.read()
     finally:
         try:
@@ -153,7 +154,8 @@ def _edit_in_system_editor(initial: str = "") -> str:
 def _multiline_input(console: Console, prompt: str) -> str:
     console.print(
         Panel.fit(
-            "[b]Multi-line mode[/b]: type your message and submit by entering a blank line.",
+            "[b]Multi-line mode[/b]: type your message and submit "
+            "by entering a blank line.",
             border_style="grey39",
         )
     )
@@ -169,7 +171,8 @@ def _multiline_input(console: Console, prompt: str) -> str:
 def prompt_for_reply(console: Console, prompt: str = "Your reply>") -> str:
     console.print(
         Panel.fit(
-            "Reply options: [b]/ml[/b] multi-line • [b]/edit[/b] open $EDITOR • [b]/skip[/b] submit empty",
+            "Reply options: [b]/ml[/b] multi-line • [b]/edit[/b] open $EDITOR • "
+            "[b]/skip[/b] submit empty",
             border_style="grey35",
         )
     )
@@ -189,13 +192,3 @@ def prompt_for_reply(console: Console, prompt: str = "Your reply>") -> str:
 
 
 # ---------- Agent ----------
-
-
-
-from rich.console import Console
-
-
-
-
-
-

@@ -32,20 +32,18 @@ class QuALITYExample:
                 "article": self.article,
                 "question": self.question,
                 "choices": choices,
-                "target": choices_letters[gold_idx], 
+                "target": choices_letters[gold_idx],
                 **self.metadata,
             },
             input=self.question,
             target=choices_letters[gold_idx],
-            choices=choices
+            choices=choices,
         )
 
 
 class QuALITY:
-    """
-    QuALITY dataset with pre-processing described in the
-    Debating with More Persuasive LLMs Leads to More Truthful Answers paper.
-    """
+    """QuALITY dataset with pre-processing described in the Debating with More
+    Persuasive LLMs Leads to More Truthful Answers paper."""
 
     def __init__(self, data_dir: Path, random_seed: int = 25) -> None:
         if data_dir.is_dir() and not any(data_dir.iterdir()):
@@ -112,7 +110,7 @@ class QuALITY:
         timed_annot_wrong_half_time: bool = (
             sum(speed_annot_answers) / len(speed_annot_answers)
         ) < 0.5
-        "3. All untimed annotators agree that the question is answerable and unambiguous"
+        "3.All untimed annotators agree that the question is answerable and unambiguous"
         untimed_answerable_unambig: bool = all(
             [
                 annot["untimed_eval1_answerability"] == 1

@@ -10,10 +10,8 @@ def strip_prompt(prompt: str) -> str:
 
 
 def prepare_messages(messages, ignore_tags: list[str], agent_prompt: str | None = None):
-    """
-    Prepare message history by adding system prompt for agent and
-    filtering messages based on ignore_tags.
-    """
+    """Prepare message history by adding system prompt for agent and filtering messages
+    based on ignore_tags."""
     prepared_messages = (
         [ChatMessageSystem(content=agent_prompt)] if agent_prompt else []
     )

@@ -1,8 +1,6 @@
 from typing import Literal
 
-from inspect_ai import solver
 from inspect_ai.agent import Agent, AgentState, agent, run
-from inspect_ai.solver import Generate, Solver, TaskState, solver
 
 from aspasia.agents import consultant_agent, judge_agent
 from aspasia.prompts import CONSULTANT_JUDGE_PROMPT, CONSULTANT_PROMPT

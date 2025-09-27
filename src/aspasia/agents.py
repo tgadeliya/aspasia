@@ -3,7 +3,7 @@ from inspect_ai.model import ChatMessageSystem, ChatMessageUser, get_model
 from inspect_ai.util import input_screen
 
 from aspasia.human_interface import display_chat_history_in_console, prompt_for_reply
-from aspasia.utils import display_chat_history_in_console, prepare_messages
+from aspasia.utils import prepare_messages
 
 
 @agent
@@ -62,9 +62,8 @@ def debater_agent(agent_prompt: str):
     return execute
 
 
-# TODO: Decide what version to keep: this one or in interactive_consultant(style generated with Chatgpt)
-
-
+# TODO: Decide what version to keep: this one or
+# in interactive_consultant(style generated with Chatgpt)
 @agent
 def human_judge_agent(ignore_msg_with_tags: list[str] = []) -> Agent:
     async def execute(state: AgentState) -> AgentState:

@@ -15,19 +15,19 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "ipykernel>=6.30.1",
     "pytest>=8.4.1",
-    "ruff>=0.12.9",
-    "ty>=0.0.1a18",
+    "ruff>=0.12.0",
+    "ty>=0.0.1a11",
 ]
 
-[project.entry-points.inspect_ai]
-evals = "aspasia._registry"
 
 [tool.ruff]
+fix = true
 line-length = 88
+unsafe-fixes = true
 
 [tool.ruff.lint]
-preview = true
 select = [
     "E",
     "F",
@@ -41,5 +41,14 @@ extend-select = [
 ignore = [
     "E702"
 ]
+
+
+[tool.ruff.lint.per-file-ignores]
+"src/aspasia/prompts.py"= ["E501"]
+
+[tool.ruff.format]
+docstring-code-format = true
+line-ending = "lf"
+
 
 

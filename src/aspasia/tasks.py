@@ -28,7 +28,7 @@ def consultancy_runner(
     consultant_model: str = "openai/gpt-4.1-nano",
     judge_model: str = "openai/gpt-4.1-nano",
     consultant_side: Literal["random", "target"] = "target",
-    random_seed: int = 25
+    random_seed: int = 25,
 ):
     dataset = QuALITY(
         Path("/Users/tsimur.hadeliya/code/aspasia/data")
@@ -64,15 +64,13 @@ def debate_runner(
     debater_model: str = "openai/gpt-4.1-nano",
     judge_model: str = "openai/gpt-4.1-nano",
     judge_type: Literal["agent", "human"] = "agent",
-    random_seed: int = 25
+    random_seed: int = 25,
 ):
     dataset = QuALITY(
         Path("/Users/tsimur.hadeliya/code/aspasia/data")
     ).get_memory_dataset("dev")
 
-    debaters = [
-        debater_agent(agent_prompt=DEBATER_PROMPT) for _ in range(num_debaters)
-    ]
+    debaters = [debater_agent(agent_prompt=DEBATER_PROMPT) for _ in range(num_debaters)]
 
     if judge_type == "agent":
         judge = judge_agent(
@@ -104,6 +102,7 @@ def debate_runner(
         # TODO: Add generation for both models
         config=GenerateConfig(temperature=0.1, max_tokens=300, seed=random_seed),
         name=run_name,
-        # TODO: Add custom scorer: judge model will evaluate letter based on given conversation
+        # TODO: Add custom scorer: judge model will evaluate letter based
+        # on given conversation
         scorer=answer(pattern="letter"),
     )

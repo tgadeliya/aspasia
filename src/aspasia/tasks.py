@@ -20,9 +20,11 @@ from aspasia.protocols import (
 )
 from aspasia.solvers import multiple_choice_no_generation
 
+DEFAULT_DATA_PATH = Path("/Users/tsimur.hadeliya/code/aspasia/data")
 
 @task
 def consultancy_runner(
+    dataset_path: Path = DEFAULT_DATA_PATH,
     num_turns: int = 2,
     interactive: bool = False,
     consultant_model: str = "openai/gpt-4.1-nano",
@@ -31,7 +33,8 @@ def consultancy_runner(
     random_seed: int = 25,
 ):
     dataset = QuALITY(
-        Path("/Users/tsimur.hadeliya/code/aspasia/data")
+        dataset_path,
+        random_seed=random_seed,
     ).get_memory_dataset("dev")
     consultancy_solver = consultancy(
         num_turns=num_turns,
@@ -58,6 +61,7 @@ def consultancy_runner(
 
 @task
 def debate_runner(
+    dataset_path: Path = DEFAULT_DATA_PATH,
     num_turns: int = 2,
     num_debaters: int = 2,
     interactive: bool = False,
@@ -67,9 +71,10 @@ def debate_runner(
     random_seed: int = 25,
 ):
     dataset = QuALITY(
-        Path("/Users/tsimur.hadeliya/code/aspasia/data")
+        dataset_path,
+        random_seed=random_seed,
     ).get_memory_dataset("dev")
-
+    
     debaters = [debater_agent(agent_prompt=DEBATER_PROMPT) for _ in range(num_debaters)]
 
     if judge_type == "agent":

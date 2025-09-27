@@ -1,7 +1,14 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/aspasia"]
+
 [project]
 name = "aspasia"
 version = "0.1.0"
-description = "Implementation and replication of AI debate papers using Inspect framework"
+description = "Framework for AI debate based on Inspect AI framework"
 readme = "README.md"
 requires-python = ">=3.13.3"
 dependencies = [
@@ -20,6 +27,10 @@ dev = [
     "ruff>=0.12.0",
     "ty>=0.0.1a11",
 ]
+
+
+[project.entry-points.inspect_ai]
+evals = "aspasia._registry"
 
 
 [tool.ruff]

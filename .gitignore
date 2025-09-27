@@ -1,9 +1,8 @@
-##### Custom
-
+#### Custom
 data
 logs
-
-
+.DS_Store
+**/.DS_Store
 #####
 
 

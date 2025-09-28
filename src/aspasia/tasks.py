@@ -45,7 +45,7 @@ def consultancy_runner(
         solver=[
             multiple_choice_no_generation(template=MCQ_TEMPLATE),
             user_message(ARTICLE_TEMPLATE),
-            consultancy_solver,
+            consultancy_solver, # type: ignore
         ],
         message_limit=12,
         model_roles={"consultant": consultant_model, "judge": judge_model},
@@ -99,7 +99,7 @@ def debate_runner(
         solver=[
             multiple_choice_no_generation(template=MCQ_TEMPLATE),
             user_message(ARTICLE_TEMPLATE),
-            debate_solver,
+            debate_solver, # type: ignore
         ],
         message_limit=20,
         model_roles={"debater": debater_model, "judge": judge_model},

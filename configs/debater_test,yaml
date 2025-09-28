@@ -1,0 +1,8 @@
+dataset_path: "../data"
+num_turns: 2
+num_debaters: 2
+interactive: false
+debater_model: "openai/gpt-4.1-nano"
+judge_model: "openai/gpt-4.1-nano"
+judge_type: "agent"
+random_seed: 25

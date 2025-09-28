@@ -1,0 +1,7 @@
+dataset_path: "../../data" # relative to the tasks.py file
+num_turns: 2
+interactive: false
+consultant_model: "openai/gpt-4.1-nano"
+judge_model: "openai/gpt-4.1-nano"
+consultant_side: "target"
+random_seed: 25

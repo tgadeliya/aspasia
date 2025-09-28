@@ -17,7 +17,7 @@ def consultant_agent(
         # Add side prompt
         letter_side = state.messages[0].metadata["target"]
         side_prompt = f"\nYou are arguing for {letter_side}"
-        consultant_messages.messages[0].content += side_prompt
+        consultant_messages[1].content = str(consultant_messages[1].content) + side_prompt
 
         messages, output = await model.generate_loop(consultant_messages)
         state.output = output
@@ -50,9 +50,9 @@ def debater_agent(agent_prompt: str):
         # append agent prompt
         debater_messages = [ChatMessageSystem(content=agent_prompt)] + state.messages
         # Add side prompt
-        letter_side = state.messages[0].metadata["target"]
+        letter_side = state.messages[0].metadata["target"] # type: ignore
         side_prompt = f"\nYou are arguing for {letter_side}"
-        debater_messages[0].content += side_prompt
+        debater_messages[0].content = str(debater_messages[0].content) + side_prompt
 
         messages, output = await model.generate_loop(debater_messages)
         state.output = output
